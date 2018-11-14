@@ -4,7 +4,7 @@ import Message from "./Message";
 const MessageList = ({messages}) => {
     return (
         messages.map(message => {
-            return <Message />
+            return <Message message={message}/>
         })
     )
 }

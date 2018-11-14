@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
-import './App.css';
-import Toolbar from './Components/Toolbar';
-import MessageList from './Components/MessageList';
+import React, { Component } from 'react'
+import './App.css'
+import Toolbar from './Components/Toolbar'
+import MessageList from './Components/MessageList'
 
 class App extends Component {
 
   state = {
-    messages: [1, 2, 3]
+    messages: []
+  }
+
+  async componentDidMount() {
+    const response = await fetch("http://localhost:8082/api/messages")
+    const message = await response.json()
+    this.setState({ messages: message })
   }
 
   render() {
@@ -19,4 +25,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
