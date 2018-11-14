@@ -1,9 +1,11 @@
 import React from "react"
 import Message from "./Message";
 
-const MessageList = () => {
+const MessageList = ({messages}) => {
     return (
-        <Message />
+        messages.map(message => {
+            return <Message />
+        })
     )
 }
 
