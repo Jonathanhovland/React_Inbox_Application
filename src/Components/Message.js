@@ -1,8 +1,8 @@
 import React from "react"
 
-const Message = ({ message }) => {
+const Message = ({ message, messageRead }) => {
     return (
-        <div className="row message unread">
+        <div className={message.read ? "row message read" : "row message unread"} onClick={() => messageRead(message.id)}>
             <div className="col-xs-1">
                 <div className="row">
                     <div className="col-xs-2">
