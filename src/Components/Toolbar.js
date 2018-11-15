@@ -10,7 +10,7 @@ const Toolbar = () => {
       </p>
 
       <button className="btn btn-default">
-        <i className={false ? "fa fa-check-square-o" : "fa fa-minus-square-o"}></i>
+        <i className={true ? "fa fa-check-square-o" : "fa fa-minus-square-o"}></i>
       </button>
 
       <button className="btn btn-default">
