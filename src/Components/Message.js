@@ -2,7 +2,7 @@ import React from "react"
 
 const Message = ({ message, messageRead, messageSelected }) => {
     return (
-        <div className={message.read ? "row message read" : "row message unread"} onClick={() => messageRead(message.id)}>
+        <div className={message.read ? "row message read" : "row message unread"}>
             <div className="col-xs-1">
                 <div className="row">
                     <div className="col-xs-2">
@@ -13,7 +13,7 @@ const Message = ({ message, messageRead, messageSelected }) => {
                     </div>
                 </div>
             </div>
-            <div className="col-xs-11">
+            <div className="col-xs-11" onClick={() => messageRead(message.id)} >
                 <a href="#">
                     {message.subject}
                 </a>
