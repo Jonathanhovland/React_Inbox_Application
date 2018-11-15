@@ -1,6 +1,6 @@
 import React from "react"
 
-const Toolbar = () => {
+const Toolbar = ({ markAsRead }) => {
     return (
     <div className="row toolbar">
     <div className="col-md-12">
@@ -13,7 +13,7 @@ const Toolbar = () => {
         <i className={true ? "fa fa-check-square-o" : "fa fa-minus-square-o"}></i>
       </button>
 
-      <button className="btn btn-default">
+      <button onClick={ markAsRead } className="btn btn-default">
         Mark As Read
       </button>
 

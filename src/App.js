@@ -15,6 +15,25 @@ class App extends Component {
     this.setState({ messages: message })
   }
 
+  markAsRead = () => {
+    console.log("markAsRead");
+    const selectedMessages = this.state.messages.filter(message => message.selected === true)
+    console.log("selectedMessages", selectedMessages)
+    selectedMessages.forEach(message => this.messageRead(message.id))
+  }
+
+  messageSelected = (id) => {
+    console.log("balllsssss", id)
+    
+    const updateMessages = this.state.messages.map(message => {
+      if (message.id === id) {
+        message.selected = !message.selected
+      }
+      return message
+    })
+      this.setState({ messages: updateMessages })
+  }
+
   messageRead = async (id) => {
     
     await fetch("http://localhost:8082/api/messages", {
@@ -26,13 +45,13 @@ class App extends Component {
       body: JSON.stringify({
         messageIds: [id],
         command: "read",
-        "read": false
+        "read": true
       })
     })
 
     const updateMessages = this.state.messages.map(message => {
       if (message.id === id) {
-        message.read = !message.read
+        message.read = true
       }
       return message
     })
@@ -42,8 +61,8 @@ class App extends Component {
   render() {
     return (
       <div classNameName="App">
-        <Toolbar />
-        <MessageList messages={this.state.messages} messageRead={this.messageRead}/>
+        <Toolbar markAsRead={this.markAsRead}/>
+        <MessageList messages={this.state.messages} messageRead={this.messageRead} messageSelected={this.messageSelected}/>
       </div>
     );
   }

@@ -1,12 +1,12 @@
 import React from "react"
 
-const Message = ({ message, messageRead }) => {
+const Message = ({ message, messageRead, messageSelected }) => {
     return (
         <div className={message.read ? "row message read" : "row message unread"} onClick={() => messageRead(message.id)}>
             <div className="col-xs-1">
                 <div className="row">
                     <div className="col-xs-2">
-                        <input type="checkbox" />
+                        <input type="checkbox" onClick={() => messageSelected(message.id)} checked={(typeof message.selected !== "undefined") && message.selected === true ? "checked" : ""} />
                     </div>
                     <div className="col-xs-2">
                         <i className="star fa fa-star-o"></i>
