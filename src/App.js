@@ -16,22 +16,16 @@ class App extends Component {
   }
 
   markAsRead = () => {
-    console.log("markAsRead");
     const selectedMessages = this.state.messages.filter(message => message.selected === true)
-    console.log("selectedMessages", selectedMessages)
-    selectedMessages.forEach(message => this.messageRead(message.id))
+    selectedMessages.forEach(message => this.toggleRead(message.id))
   }
 
   markUnread = () => {
-    console.log("markUnread");
     const selectedMessages = this.state.messages.filter(message => message.selected === true)
-    console.log("selectedMessages", selectedMessages)
     selectedMessages.forEach(message => this.messageUnread(message.id))
   }
 
-  messageSelected = (id) => {
-    console.log("balllsssss", id)
-    
+  toggleSelected = (id) => {    
     const updateMessages = this.state.messages.map(message => {
       if (message.id === id) {
         message.selected = !message.selected
@@ -41,8 +35,7 @@ class App extends Component {
       this.setState({ messages: updateMessages })
   }
 
-  messageRead = async (id) => {
-    
+  toggleRead = async (id) => {
     await fetch("http://localhost:8082/api/messages", {
       method: "PATCH",
       headers: {
@@ -66,7 +59,6 @@ class App extends Component {
   }
 
   messageUnread = async (id) => {
-    
     await fetch("http://localhost:8082/api/messages", {
       method: "PATCH",
       headers: {
@@ -91,13 +83,12 @@ class App extends Component {
 
   render() {
     return (
-      <div classNameName="App">
+      <div className="App">
         <Toolbar markAsRead={this.markAsRead}
                  markUnread={this.markUnread}/>
         <MessageList messages={this.state.messages} 
-                     messageRead={this.messageRead}
-                     messageUnread={this.messageUnread} 
-                     messageSelected={this.messageSelected}/>
+                     toggleRead={this.toggleRead}
+                     toggleSelected={this.toggleSelected}/>
       </div>
     );
   }
