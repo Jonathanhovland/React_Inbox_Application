@@ -1,6 +1,6 @@
 import React from "react"
 
-const Toolbar = ({ markAsRead, markUnread }) => {
+const Toolbar = ({ markAsRead, markUnread, composeHandler }) => {
     return (
     <div className="row toolbar">
     <div className="col-md-12">
@@ -8,6 +8,10 @@ const Toolbar = ({ markAsRead, markUnread }) => {
         <span className="badge badge">2</span>
         unread messages
       </p>
+
+      <a class="btn btn-danger" onClick={composeHandler}>
+        <i class="fa fa-plus"></i>
+      </a>
 
       <button className="btn btn-default">
         <i className={true ? "fa fa-check-square-o" : "fa fa-minus-square-o"}></i>

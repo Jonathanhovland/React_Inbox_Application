@@ -2,11 +2,17 @@ import React, { Component } from 'react'
 import './App.css'
 import Toolbar from './Components/Toolbar'
 import MessageList from './Components/MessageList'
+import NewMessage from './Components/NewMessage';
 
 class App extends Component {
 
   state = {
-    messages: []
+    messages: [],
+    composeForm: false,
+    composeMessageForm: {
+      subject: "",
+      body: ""
+    }
   }
 
   async componentDidMount() {
@@ -68,7 +74,7 @@ class App extends Component {
       body: JSON.stringify({
         messageIds: [id],
         command: "read",
-        "read": false
+        "read": true
       })
     })
 
@@ -81,14 +87,52 @@ class App extends Component {
       this.setState({ messages: updateMessages })
   }
 
+  toggleStarred = (Id) => {
+    fetch("http://localhost:8082/api/messages", {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        messageIds: [Id],
+        command: "star"
+      })
+    })
+    .then(response => response.json())
+    .then(newMessages => {
+      this.setState({
+        messages: newMessages
+      })
+    })
+    
+  }
+
+  composeHandler = (e) => {
+    let newComposeForm = this.state.composeForm
+    newComposeForm = !newComposeForm
+
+    this.setState({
+      ...this.state,
+      composeForm: newComposeForm,
+      composeMessageForm: {
+        subject: "",
+        body: ""
+      }
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <Toolbar markAsRead={this.markAsRead}
-                 markUnread={this.markUnread}/>
+                 markUnread={this.markUnread}
+                 composeHandler={this.composeHandler}/>
+        <NewMessage composeForm={this.state.composeForm}
+                   />
         <MessageList messages={this.state.messages} 
                      toggleRead={this.toggleRead}
-                     toggleSelected={this.toggleSelected}/>
+                     toggleSelected={this.toggleSelected}
+                     toggleStarred={this.toggleStarred}/>
       </div>
     );
   }
