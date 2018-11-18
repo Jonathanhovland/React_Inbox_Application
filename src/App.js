@@ -16,6 +16,10 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    this.theMessages()
+  }
+
+  async theMessages() {
     const response = await fetch("http://localhost:8082/api/messages")
     const message = await response.json()
     this.setState({ messages: message })
@@ -87,8 +91,8 @@ class App extends Component {
       this.setState({ messages: updateMessages })
   }
 
-  toggleStarred = (Id) => {
-    fetch("http://localhost:8082/api/messages", {
+  toggleStarred = async (Id) => {
+    await fetch("http://localhost:8082/api/messages", {
       method: "PATCH",
       headers: {
         "content-type": "application/json"
@@ -104,15 +108,14 @@ class App extends Component {
         messages: newMessages
       })
     })
-    
   }
 
-  composeHandler = (e) => {
+  composeHandler = () => {
     let newComposeForm = this.state.composeForm
     newComposeForm = !newComposeForm
 
     this.setState({
-      ...this.state,
+      // ...this.state,
       composeForm: newComposeForm,
       composeMessageForm: {
         subject: "",
@@ -121,6 +124,45 @@ class App extends Component {
     })
   }
 
+  composeMessageSubject = (e) => {
+    const newSubject = e.target.value
+    this.setState({
+      composeMessageForm: { ...this.state.composeMessageForm, subject: newSubject }
+    })
+  }
+
+  composeMessageBody = (e) => {
+    const newBody = e.target.value
+    this.setState({
+      composeMessageForm: { ...this.state.composeMessageForm, body: newBody}
+    })
+  }
+
+  sendMessage = async (e) => {
+    e.preventDefault()
+    const newMessage = this.state.composeMessageForm
+    if (!newMessage.subject || !newMessage.body) {
+      return
+    }
+
+    await fetch("http://localhost:8082/api/messages", {
+      method: "POST",
+      body: JSON.stringify(newMessage),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    });
+    this.setState({
+      composeForm: true,
+      composeFormMessage: {
+        subject: "",
+        body: ""
+      }
+    })
+    this.theMessages()
+  };
+
   render() {
     return (
       <div className="App">
@@ -128,7 +170,9 @@ class App extends Component {
                  markUnread={this.markUnread}
                  composeHandler={this.composeHandler}/>
         <NewMessage composeForm={this.state.composeForm}
-                   />
+                    composeMessageSubject={this.composeMessageSubject}
+                    composeMessageBody={this.composeMessageBody}
+                    sendMessage={this.sendMessage}/>
         <MessageList messages={this.state.messages} 
                      toggleRead={this.toggleRead}
                      toggleSelected={this.toggleSelected}
