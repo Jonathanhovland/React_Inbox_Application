@@ -59,7 +59,6 @@ class App extends Component {
         "read": true
       })
     })
-
     const updateMessages = this.state.messages.map(message => {
       if (message.id === id) {
         message.read = true
@@ -92,7 +91,7 @@ class App extends Component {
       this.setState({ messages: updateMessages })
   }
 
-  toggleStarred = async (Id) => {
+  toggleStarred = async (id) => {
     await fetch("http://localhost:8082/api/messages", {
       method: "PATCH",
       headers: {
@@ -100,7 +99,7 @@ class App extends Component {
         "accept": "application/json"
       },
       body: JSON.stringify({
-        messageIds: [Id],
+        messageIds: [id],
         command: "star"
       })
     })
@@ -134,7 +133,7 @@ class App extends Component {
   composeMessageBody = (e) => {
     const newBody = e.target.value
     this.setState({
-      composeMessageForm: { ...this.state.composeMessageForm, body: newBody}
+      composeMessageForm: { ...this.state.composeMessageForm, body: newBody }
     })
   }
 
@@ -165,21 +164,21 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Toolbar markAsRead={this.markAsRead}
-                 markUnread={this.markUnread}
-                 composeHandler={this.composeHandler}
-                 messages={this.state.messages}
-                 unreadCount={this.state.unreadCount}/>
-        <NewMessage composeMessage={this.state.composeMessage}
-                    composeMessageSubject={this.composeMessageSubject}
-                    composeMessageBody={this.composeMessageBody}
-                    sendMessage={this.sendMessage}/>
-        <MessageList messages={this.state.messages} 
-                     toggleRead={this.toggleRead}
-                     toggleSelected={this.toggleSelected}
-                     toggleStarred={this.toggleStarred}/>
+        <Toolbar markAsRead={ this.markAsRead }
+                 markUnread={ this.markUnread }
+                 composeHandler={ this.composeHandler }
+                 messages={ this.state.messages }
+                 unreadCount={ this.state.unreadCount }/>
+        <NewMessage composeMessage={ this.state.composeMessage }
+                    composeMessageSubject={ this.composeMessageSubject }
+                    composeMessageBody={ this.composeMessageBody }
+                    sendMessage={ this.sendMessage }/>
+        <MessageList messages={ this.state.messages } 
+                     toggleRead={ this.toggleRead }
+                     toggleSelected={ this.toggleSelected }
+                     toggleStarred={ this.toggleStarred }/>
       </div>
-    );
+    )
   }
 }
 

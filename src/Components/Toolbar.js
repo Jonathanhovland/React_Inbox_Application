@@ -10,16 +10,16 @@ const Toolbar = ({ messages, markAsRead, markUnread, composeHandler }) => {
     <div className="row toolbar">
     <div className="col-md-12">
       <p className="pull-right">
-        <span className="badge badge">{unreadCount}</span>
+        <span className="badge badge">{ unreadCount }</span>
         unread messages
       </p>
 
-      <a class="btn btn-danger" onClick={composeHandler}>
+      <a class="btn btn-danger" onClick={ composeHandler }>
         <i class="fa fa-plus"></i>
       </a>
 
       <button className="btn btn-default">
-        <i className={true ? "fa fa-check-square-o" : "fa fa-minus-square-o"}></i>
+        <i className={ true ? "fa fa-check-square-o" : "fa fa-minus-square-o" }></i>
       </button>
 
       <button onClick={ markAsRead } className="btn btn-default">Mark As Read</button>
