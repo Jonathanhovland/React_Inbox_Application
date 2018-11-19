@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import './App.css'
 import Toolbar from './Components/Toolbar'
 import MessageList from './Components/MessageList'
-import NewMessage from './Components/NewMessage';
+import NewMessage from './Components/NewMessage'
 
 class App extends Component {
 
   state = {
+    unreadCount: 0,
     messages: [],
     composeForm: false,
     composeMessageForm: {
@@ -95,7 +96,8 @@ class App extends Component {
     await fetch("http://localhost:8082/api/messages", {
       method: "PATCH",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
+        "accept": "application/json"
       },
       body: JSON.stringify({
         messageIds: [Id],
@@ -144,15 +146,14 @@ class App extends Component {
     if (!newMessage.subject || !newMessage.body) {
       return
     }
-
     await fetch("http://localhost:8082/api/messages", {
       method: "POST",
       body: JSON.stringify(newMessage),
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
+        "content-type": "application/json",
+        "accept": "application/json"
       }
-    });
+    })
     this.setState({
       composeForm: true,
       composeFormMessage: {
@@ -161,14 +162,16 @@ class App extends Component {
       }
     })
     this.theMessages()
-  };
+  }
 
   render() {
     return (
       <div className="App">
         <Toolbar markAsRead={this.markAsRead}
                  markUnread={this.markUnread}
-                 composeHandler={this.composeHandler}/>
+                 composeHandler={this.composeHandler}
+                 messages={this.state.messages}
+                 unreadCount={this.state.unreadCount}/>
         <NewMessage composeForm={this.state.composeForm}
                     composeMessageSubject={this.composeMessageSubject}
                     composeMessageBody={this.composeMessageBody}
