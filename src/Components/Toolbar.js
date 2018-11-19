@@ -22,13 +22,9 @@ const Toolbar = ({ messages, markAsRead, markUnread, composeHandler }) => {
         <i className={true ? "fa fa-check-square-o" : "fa fa-minus-square-o"}></i>
       </button>
 
-      <button onClick={ markAsRead } className="btn btn-default">
-        Mark As Read
-      </button>
+      <button onClick={ markAsRead } className="btn btn-default">Mark As Read</button>
 
-      <button onClick={ markUnread } className="btn btn-default">
-        Mark As Unread
-      </button>
+      <button onClick={ markUnread } className="btn btn-default">Mark As Unread</button>
 
       <select className="form-control label-select">
         <option>Apply label</option>

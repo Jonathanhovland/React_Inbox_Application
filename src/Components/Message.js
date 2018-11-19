@@ -4,7 +4,6 @@ const Message = ({id, read, selected, starred, subject, toggleStarred, toggleSel
     const readClasses = read ? "row message read" : "row message unread"
     const selectedClass = selected ? " selected" : ""
     const starredClasses = starred ? "star fa fa-star" : "star fa fa-star-o"    
-    
     return (
         <div className={readClasses + selectedClass}>
             <div className="col-xs-1">

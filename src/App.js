@@ -9,7 +9,7 @@ class App extends Component {
   state = {
     unreadCount: 0,
     messages: [],
-    composeForm: false,
+    composeMessage: false,
     composeMessageForm: {
       subject: "",
       body: ""
@@ -26,16 +26,6 @@ class App extends Component {
     this.setState({ messages: message })
   }
 
-  markAsRead = () => {
-    const selectedMessages = this.state.messages.filter(message => message.selected === true)
-    selectedMessages.forEach(message => this.toggleRead(message.id))
-  }
-
-  markUnread = () => {
-    const selectedMessages = this.state.messages.filter(message => message.selected === true)
-    selectedMessages.forEach(message => this.messageUnread(message.id))
-  }
-
   toggleSelected = (id) => {    
     const updateMessages = this.state.messages.map(message => {
       if (message.id === id) {
@@ -44,6 +34,16 @@ class App extends Component {
       return message
     })
       this.setState({ messages: updateMessages })
+  }
+
+  markAsRead = () => {
+    const selectedMessages = this.state.messages.filter(message => message.selected === true)
+    selectedMessages.forEach(message => this.toggleRead(message.id))
+  }
+
+  markUnread = () => {
+    const selectedMessages = this.state.messages.filter(message => message.selected === true)
+    selectedMessages.forEach(message => this.messageUnread(message.id))
   }
 
   toggleRead = async (id) => {
@@ -113,12 +113,10 @@ class App extends Component {
   }
 
   composeHandler = () => {
-    let newComposeForm = this.state.composeForm
-    newComposeForm = !newComposeForm
-
+    let newcomposeMessage = this.state.composeMessage
+    newcomposeMessage = !newcomposeMessage
     this.setState({
-      // ...this.state,
-      composeForm: newComposeForm,
+      composeMessage: newcomposeMessage,
       composeMessageForm: {
         subject: "",
         body: ""
@@ -155,8 +153,8 @@ class App extends Component {
       }
     })
     this.setState({
-      composeForm: true,
-      composeFormMessage: {
+      composeMessage: true,
+      composeMessageMessage: {
         subject: "",
         body: ""
       }
@@ -172,7 +170,7 @@ class App extends Component {
                  composeHandler={this.composeHandler}
                  messages={this.state.messages}
                  unreadCount={this.state.unreadCount}/>
-        <NewMessage composeForm={this.state.composeForm}
+        <NewMessage composeMessage={this.state.composeMessage}
                     composeMessageSubject={this.composeMessageSubject}
                     composeMessageBody={this.composeMessageBody}
                     sendMessage={this.sendMessage}/>

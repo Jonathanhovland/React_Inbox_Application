@@ -1,7 +1,7 @@
 import React from "react"
 
-const NewMessage = ({ composeForm, composeMessageSubject, composeMessageBody, sendMessage }) => {
-    const toggleNewMessage = composeForm ? "block" : "none"
+const NewMessage = ({ composeMessage, composeMessageSubject, composeMessageBody, sendMessage }) => {
+    const toggleNewMessage = composeMessage ? "block" : "none"
     return (
         <div style={{ display: `${toggleNewMessage}` }}>
         <form class="form-horizontal well">
